@@ -11,23 +11,25 @@ CORS(app)
 
 # * requests
 
-@app.route('/')
+
+@app.route("/")
 def test():
     # test
     return "hello world"
 
 
-@app.route('/backup')
+@app.route("/backup")
 def backup():
     # backup
     data = request.get_json(force=True)
     cur_time = datetime.datetime.now()
     filename = cur_time.strftime("%Y_%m_%d_%H_%M_%S")
-    os.makedirs("backups", exist_ok = True)
-    with open("backups/" + filename + ".json", "w") as f: 
+    os.makedirs("backups", exist_ok=True)
+    with open("backups/" + filename + ".json", "w") as f:
         json.dump(data, f)
     return ("", 204)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     # create backups folder if not present yet
     app.run(host="0.0.0.0", port=5090, threaded=False)
